@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { db, auth } from '../firebase/config';
+import MyCamera from "../components/Camera";
+
 
 
 
@@ -9,8 +11,8 @@ class Post extends Component {
         super(props)
         this.state = {
             Description: '',
-
-
+            showCamera: true,
+            url: ''
         }
     }
 
@@ -24,7 +26,12 @@ class Post extends Component {
             .catch(e => console.log(e))
 
     }
-
+    onImageUpload(url) {
+        this.setState({
+            showCamera: false,
+            url: url
+        });
+    }
 
     render() {
         return (
@@ -40,6 +47,9 @@ class Post extends Component {
                 <TouchableOpacity onPress={() => this.onSubmit()}>
                     <Text>Publicar</Text>
                 </TouchableOpacity>
+            
+                <MyCamera onImageUpload={(url) => this.onImageUpload(url)} />
+
 
             </View >
 
