@@ -6,21 +6,24 @@ class Login extends Component {
   constructor() {
     super(),
       this.state = {
-        password: "",
-        email: "",
+        password: '',
+        email: '',
+        errors: ''
       };
   }
 
   onSubmit() {
     auth.signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => this.props.navigation.navigate('Main'))
-      .catch()
+      .catch(error => this.setState({errors: error.message}))
+      .then(() => console.log(this.state.errors))
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text>Login</Text>
+        <Text style={styles.alert}>{this.state.errors}</Text>        
         <TextInput
           keyboardType="email-address"
           placeholder="email"
@@ -59,6 +62,9 @@ const styles = StyleSheet.create({
         borderColor: 'red',
         width: 500,
         height: 50
+    },
+    alert: {
+        color: 'red'
     }
 })
 
