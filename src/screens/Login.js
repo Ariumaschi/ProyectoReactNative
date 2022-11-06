@@ -23,26 +23,28 @@ class Login extends Component {
     return (
       <View style={styles.container}>
         <Text>Login</Text>
-        <Text style={styles.alert}>{this.state.errors}</Text>        
-        <TextInput
-          keyboardType="email-address"
-          placeholder="email"
-          onChangeText={(text) => this.setState({ email: text })}
-          value={this.state.email}
-          style={styles.input}
-        />
-        <TextInput
-          keyboardType="default"
-          placeholder="password"
-          secureTextEntry={true}
-          onChangeText={(text) => this.setState({ password: text })}
-          value={this.state.password}
-          style={styles.input}
-        />
-        <TouchableOpacity onPress={() => this.onSubmit()}>
-          <Text> Login </Text>
-        </TouchableOpacity>
-        <Text onPress={ () => this.props.navigation.navigate('Register')} >Ir a register</Text>
+            <View style={styles.box}>
+                <Text style={styles.alert}>{this.state.errors}</Text>        
+                <TextInput
+                keyboardType="email-address"
+                placeholder="email"
+                onChangeText={(text) => this.setState({ email: text })}
+                value={this.state.email}
+                style={styles.input}
+                />
+                <TextInput
+                keyboardType="default"
+                placeholder="password"
+                secureTextEntry={true}
+                onChangeText={(text) => this.setState({ password: text })}
+                value={this.state.password}
+                style={styles.input}
+                />
+                <TouchableOpacity onPress={() => this.onSubmit()}>
+                <Text style={styles.button}> Login </Text>
+                </TouchableOpacity>
+            </View>
+                <Text onPress={ () => this.props.navigation.navigate('Register')} >Ir a register</Text>
       </View>
     );
   }
@@ -55,16 +57,32 @@ const styles = StyleSheet.create({
         marginTop: 10,
         justifyContent: 'center',
         alignItems:'center',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        height: '100%'
+    },
+    box: {
+        backgroundColor: '#FF1493',
+        height: '35%',
+        width: '80%',
+        borderRadius: '5%',
+        justifyContent: 'center',
+        alignItems:'center',
+        margin: '8%'
     },
     input: {
         borderRadius: 5,
-        borderColor: 'red',
-        width: 500,
-        height: 50
+        backgroundColor: 'white',
+        width: '80%',
+        height: '5%',
+        padding: '5%',
+        margin: '8%'
     },
     alert: {
-        color: 'red'
+        color: 'white'
+    },
+    button: {
+        backgroundColor: 'white',
+        borderRadius: '5%'
     }
 })
 

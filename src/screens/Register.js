@@ -27,27 +27,29 @@ class Register extends Component {
         return(
             <View style={styles.container}> 
                 <Text>Registro</Text>
-                <View>
+                <View style={styles.box}>
                     <Text style={styles.alert}>{this.state.errors}</Text>
                     <TextInput  
                         placeholder='email'
                         keyboardType='email-address'
                         onChangeText={ text => this.setState({email:text}) }
                         value={this.state.email}
+                        style={styles.input}
                     /> 
                     <TextInput  
                         placeholder='password'
                         keyboardType='default'
                         onChangeText={ text => this.setState({pass:text}) }
                         value={this.state.pass}
+                        style={styles.input} 
                     />  
 
                     <TouchableOpacity onPress={() => this.registerUser(this.state.email, this.state.pass)}>
-                        <Text>Registrarme</Text>
+                        <Text style={styles.button}>Registrarme</Text>
                     </TouchableOpacity>
 
-                    <Text onPress={ () => this.props.navigation.navigate('Login')} > Ir a login </Text>
                 </View>
+                    <Text onPress={ () => this.props.navigation.navigate('Login')} > Ir a login </Text>
             </View>
         )
     }   
@@ -60,10 +62,32 @@ const styles = StyleSheet.create({
         marginTop: 10,
         justifyContent: 'center',
         alignItems:'center',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        height: '100%'
+    },
+    box: {
+        backgroundColor: '#FF1493',
+        height: '35%',
+        width: '80%',
+        borderRadius: '5%',
+        justifyContent: 'center',
+        alignItems:'center',
+        margin: '8%'
+    },
+    input: {
+        borderRadius: 5,
+        backgroundColor: 'white',
+        width: '80%',
+        height: '5%',
+        padding: '5%',
+        margin: '8%'
     },
     alert: {
-        color: 'red'
+        color: 'white'
+    },
+    button: {
+        backgroundColor: 'white',
+        borderRadius: '5%'
     }
 })
 
