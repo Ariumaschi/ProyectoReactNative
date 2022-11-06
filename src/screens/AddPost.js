@@ -6,7 +6,7 @@ import MyCamera from "../components/Camera";
 
 
 
-class Post extends Component {
+class AddPost extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -15,14 +15,16 @@ class Post extends Component {
             url: ''
         }
     }
+    
 
     onSubmit() {
         db.collection('posts').add({
             owner: auth.currentUser.email,
             Description: this.state.Description,
             createdAt: Date.now(),
+            likes: [],
         })
-            .then(this.props.navigation.navigate('Profile'))
+            .then(this.props.navigation.navigate('Posts'))
             .catch(e => console.log(e))
 
     }
@@ -77,4 +79,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Post;
+export default AddPost;
