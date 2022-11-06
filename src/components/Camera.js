@@ -24,7 +24,6 @@ class MyCamera extends Component {
     render() {
         return (
             <View>
-
                 {this.state.photo === null ? <View>
                     <Camera
                         style={styles.cameraBody}
@@ -55,9 +54,6 @@ class MyCamera extends Component {
                             </TouchableOpacity>
                         </View></View>}
             </View>
-
-
-
         )
     }
 }
@@ -68,9 +64,6 @@ const styles = StyleSheet.create({
         height: '50vh',
         position: 'absolute'
     },
-
 })
 
-
 export default MyCamera;
-

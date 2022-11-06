@@ -2,7 +2,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './Home';
 import Profile from './Profile';
 import Post from './Post';
-import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 
 export default function App() {
@@ -11,14 +12,14 @@ export default function App() {
     return (
         <Tab.Navigator>
             <Tab.Screen name="Home" component={Home} options={
-                { tabBarIcon: () => <FontAwesome name="book" size={24} color="black" /> }
+                { tabBarIcon: () => <Feather name="home" size={24} color="black" /> }
             }
             />
             <Tab.Screen name="Profile" component={Profile} options={
-                { tabBarIcon: () => <FontAwesome name="book" size={24} color="black" /> }
+                { tabBarIcon: () => <MaterialIcons name="tag-faces" size={24} color="black" /> }
             } />
             <Tab.Screen name="Post" component={Post} options={
-                { tabBarIcon: () => <FontAwesome name="book" size={24} color="black" /> }
+                { tabBarIcon: () => <Feather name="image" size={24} color="black" /> }
             } />
         </Tab.Navigator>
     );
