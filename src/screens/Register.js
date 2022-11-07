@@ -16,8 +16,12 @@ class Register extends Component {
     registerUser(email, pass){
         auth.createUserWithEmailAndPassword(email, pass)
             .then( res => {
+                db.collection('datosUsuario').add({
+                    owner: this.state.email,
+                    userName: this.state.userName,
+                    createdAt: Date.now()
+                })
                 this.props.navigation.navigate('Main');
-                console.log(this.state.email);
             })
             .catch(error => this.setState({errors: error.message}))
             .then(() => console.log(this.state.errors))
