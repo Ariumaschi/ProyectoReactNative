@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View,FlatList, Text, TextInput, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { db, auth } from '../firebase/config';
 
 class Profile extends Component {
@@ -9,6 +9,7 @@ class Profile extends Component {
             nombre: '',
             dni: '',
             edad: '',
+            posteos:[]
         }
     }
     componentDidMount() {
@@ -32,7 +33,24 @@ class Profile extends Component {
                 });
             }
         )
+        db.collection('posts').onSnapshot(
+            docs => {
+                let posts = [];
+                docs.forEach(doc => {
+                    
+                    posts.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+
+                })
+                this.setState({
+                    posteos: posts,
+                })
+
+            })
     }
+   
     
     logOut() {
         auth.signOut();
@@ -52,7 +70,20 @@ class Profile extends Component {
                 <TouchableOpacity onPress={() => this.logOut()}>
                     <Text>Logout</Text>
                 </TouchableOpacity>
-               
+                <FlatList style={styles.posts}
+                data={this.state.posteos}//flatlist=map que permite scrollear
+                renderItem={({ item }) => <View>
+                    <ul>
+                        <li> Descripción: {item.data.Description} </li>
+                        <TouchableOpacity onPress={() => this.Like(item)}>
+                            <Text>{this.state.text}</Text>
+                            
+                        </TouchableOpacity>
+                    </ul>
+                    <Image style={styles.preview} source={ {uri: item.data.url}}/>
+                </View>}
+                keyExtractor={item => item.id.toString()} />
+
                
             </View>
 
@@ -64,9 +95,18 @@ class Profile extends Component {
 const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 10,
-        marginTop: 10
+        marginTop: 10,
+        display: 'flex',
    
+        flexDirection: 'row',
+    },
+    posts:{
 
+    },
+    preview: {
+        width: '20vw',
+        height: '40vh',
+        position: 'absolute'
     }
 })
 

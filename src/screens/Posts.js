@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import { doc, updateDoc } from "firebase/firestore";
 import { db, auth } from '../firebase/config'
 
@@ -65,13 +65,22 @@ class Posts extends Component {
                             <Text>{this.state.text}</Text>
                             
                         </TouchableOpacity>
+
                     </ul>
+                    <Image style={styles.preview} source={ {uri: item.data.url}}/>
                 </View>}
                 keyExtractor={item => item.id.toString()} />
 
         )
     }
 }
-
+const styles = StyleSheet.create({
+    
+    preview: {
+        width: '30vw',
+        height: '70vh',
+        position: 'absolute'
+    }
+})
 
 export default Posts;
