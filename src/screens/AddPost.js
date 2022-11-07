@@ -15,12 +15,13 @@ class AddPost extends Component {
             url: ''
         }
     }
-    
+
 
     onSubmit() {
         db.collection('posts').add({
             owner: auth.currentUser.email,
             Description: this.state.Description,
+            url: this.state.url,
             createdAt: Date.now(),
             likes: [],
         })
@@ -28,7 +29,9 @@ class AddPost extends Component {
             .catch(e => console.log(e))
 
     }
+
     onImageUpload(url) {
+        console.log(url)
         this.setState({
             showCamera: false,
             url: url
@@ -46,11 +49,12 @@ class AddPost extends Component {
                     value={this.state.Product}
                 />
 
+
+                <MyCamera onImageUpload={(url) => this.onImageUpload(url)} />
+
                 <TouchableOpacity onPress={() => this.onSubmit()}>
                     <Text>Publicar</Text>
                 </TouchableOpacity>
-            
-                <MyCamera onImageUpload={(url) => this.onImageUpload(url)} />
 
 
             </View >

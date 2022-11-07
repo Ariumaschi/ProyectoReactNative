@@ -38,9 +38,9 @@ class Posts extends Component {
             })
     }
 
-    Like() {
+    Like(item) {
         db.collection('posts')
-            .doc(this.props.item.id)
+            .doc(item.id)
             .update({
                 likes: firebase.firestore.fieldValue.arrayUnion(auth.currentUser.email)
             })
@@ -61,7 +61,7 @@ class Posts extends Component {
                 renderItem={({ item }) => <View>
                     <ul>
                         <li> Descripción: {item.data.Description} </li>
-                        <TouchableOpacity onPress={() => this.Like()}>
+                        <TouchableOpacity onPress={() => this.Like(item)}>
                             <Text>{this.state.text}</Text>
                             
                         </TouchableOpacity>
