@@ -3,9 +3,6 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import { db, auth } from '../firebase/config';
 import MyCamera from "../components/Camera";
 
-
-
-
 class AddPost extends Component {
     constructor(props) {
         super(props)
@@ -15,7 +12,6 @@ class AddPost extends Component {
             url: ''
         }
     }
-
 
     onSubmit() {
         db.collection('posts').add({
@@ -27,7 +23,6 @@ class AddPost extends Component {
         })
             .then(this.props.navigation.navigate('Posts'))
             .catch(e => console.log(e))
-
     }
 
     onImageUpload(url) {
@@ -49,22 +44,17 @@ class AddPost extends Component {
                     value={this.state.Product}
                 />
 
-
                 <MyCamera onImageUpload={(url) => this.onImageUpload(url)} />
 
                 <TouchableOpacity onPress={() => this.onSubmit()}>
                     <Text>Publicar</Text>
                 </TouchableOpacity>
 
-
             </View >
-
         )
-
-
     }
-
 }
+
 const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 10,
@@ -79,7 +69,6 @@ const styles = StyleSheet.create({
         borderRadius: 2,
         padding: 3,
         marginBottom: 8
-
     }
 })
 
