@@ -15,20 +15,20 @@ class Profile extends Component {
     componentDidMount() {
         const email = auth.currentUser.email;
         
-        db.collection('datosUsuario').onSnapshot(
+        db.collection('users').onSnapshot(
             docs => {//todos datos de la colección
                 let user;
                 
                 docs.forEach(doc => { //por cada documento, quiero un doc y la función que ejecutaré por cada doc
                     const data = doc.data();
                     
-                    if (data.owner === email) {
+                    if (data.email === email) {
                         user = data
                     }
                 });
 
                 this.setState({
-                    nombre: user.owner,
+                    nombre: user.email,
                     userName: user.userName
                 });
             }

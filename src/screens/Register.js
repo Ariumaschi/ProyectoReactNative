@@ -9,22 +9,31 @@ class Register extends Component {
             email:'',
             pass:'',
             userName:'',
-            errors:''
+            errors:'',
+            bio: '',
+            url: ''
         }
     }
 
-    registerUser(email, pass){
-        auth.createUserWithEmailAndPassword(email, pass)
-            .then( res => {
-                db.collection('datosUsuario').add({
-                    owner: this.state.email,
-                    userName: this.state.userName,
-                    createdAt: Date.now()
-                })
+    registerUser(email, pass, username){
+        if(username != null){
+            auth.createUserWithEmailAndPassword(email, pass)
+                .then( res => {
+                    db.collection('users').add({
+                        bio: this.state.bio,
+                        userName: this.state.userName,
+                        createdAt: Date.now(),
+                        email: this.state.email,
+                        url: this.state.url
+                    })
                 this.props.navigation.navigate('Main');
-            })
+                })
             .catch(error => this.setState({errors: error.message}))
-            .then(() => console.log(this.state.errors))
+        }else{
+            this.setState({
+                errors: 'Username not provided.'
+            })
+        }
     }
 
     render(){
@@ -46,9 +55,22 @@ class Register extends Component {
                         onChangeText={ text => this.setState({pass:text}) }
                         value={this.state.pass}
                         style={styles.input} 
-                    />  
-
-                    <TouchableOpacity onPress={() => this.registerUser(this.state.email, this.state.pass)}>
+                    /> 
+                    <TextInput  
+                        placeholder='username'
+                        keyboardType='default'
+                        onChangeText={ text => this.setState({userName:text}) }
+                        value={this.state.userName}
+                        style={styles.input} 
+                    />                      
+                    <TextInput  
+                        placeholder='bio'
+                        keyboardType='default'
+                        onChangeText={ text => this.setState({bio:text}) }
+                        value={this.state.bio}
+                        style={styles.input} 
+                    />                      
+                    <TouchableOpacity onPress={() => this.registerUser(this.state.email, this.state.pass, this.state.userName)}>
                         <Text style={styles.button}>Registrarme</Text>
                     </TouchableOpacity>
 
@@ -71,7 +93,6 @@ const styles = StyleSheet.create({
     },
     box: {
         backgroundColor: '#FF1493',
-        height: '35%',
         width: '80%',
         borderRadius: '5%',
         justifyContent: 'center',
