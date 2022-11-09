@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { View,FlatList, Text, TextInput, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { db, auth } from '../firebase/config';
+import Post from '../components/Post';
 
 class Profile extends Component {
     constructor(props) {
         super(props)
         this.state = {
             nombre: '',
-            dni: '',
-            edad: '',
+            userName:'',
+            bio:'',
             posteos:[]
         }
     }
@@ -29,7 +30,8 @@ class Profile extends Component {
 
                 this.setState({
                     nombre: user.email,
-                    userName: user.userName
+                    userName: user.userName,
+                    bio:user.bio
                 });
             }
         )
@@ -61,28 +63,19 @@ class Profile extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Profile</Text>
             
-                <Text>Nombre del usuario:{this.state.nombre}</Text>
-              
-                <Text>userName:{this.state.userName}</Text>
-                
+                <Text style={styles.text}>Nombre del usuario:{this.state.nombre}</Text>
+                <Text style={styles.text} >userName:{this.state.userName}</Text>
+                <Text style={styles.text} >Bio:{this.state.bio}</Text>
                 <TouchableOpacity onPress={() => this.logOut()}>
-                    <Text>Logout</Text>
+                  <Text style={styles.button} >  <button>Logout</button></Text>
                 </TouchableOpacity>
-                <FlatList style={styles.posts}
-                data={this.state.posteos}//flatlist=map que permite scrollear
-                renderItem={({ item }) => <View>
-                    <ul>
-                        <li> Descripción: {item.data.Description} </li>
-                        <TouchableOpacity onPress={() => this.Like(item)}>
-                            <Text>{this.state.text}</Text>
-                            
-                        </TouchableOpacity>
-                    </ul>
-                    <Image style={styles.preview} source={ {uri: item.data.url}}/>
-                </View>}
-                keyExtractor={item => item.id.toString()} />
+                <FlatList 
+                    data={this.state.posteos}
+                    keyExtractor={ item => item.id.toString()}
+                    renderItem={ ({item}) => <Post postData={item} navigation={this.props.navigation} id={item.id}/>}
+                />  
+
 
                
             </View>
@@ -94,18 +87,23 @@ class Profile extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor:'white',
+        alignItems:'left' ,
+        marginLeft: 5 /*
         paddingHorizontal: 10,
         marginTop: 10,
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'row',*/
+    },text:{
+        fontFamily: 'Playfair Display',
+        color:'black',
+        fontSize: 20
     },
-    posts:{
-
-    },
-    preview: {
-        width: '20vw',
-        height: '40vh',
-        position: 'absolute'
+    button:{
+        backgroundColor: 'white',
+        color: 'white',
+        border: 'none',
+        padding: 5 
     }
 })
 

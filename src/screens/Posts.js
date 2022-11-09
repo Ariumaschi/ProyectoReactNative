@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import { doc, updateDoc } from "firebase/firestore";
 import { db, auth } from '../firebase/config'
+import Post from '../components/Post';
 
 class Posts extends Component {
 
@@ -9,7 +10,6 @@ class Posts extends Component {
         super(props)
         this.state = {
             posteos: [],
-            text: 'Like',
         }
     }
     //el estado es inmutable, hay que pisarlo con algo nuevo. Por eos hacemos un nuevo array de posts
@@ -31,44 +31,31 @@ class Posts extends Component {
             })
     }
 
-    Like(item) {
-        db.collection('posts')
-            .doc(item.id)
-            .update({
-                likes: firebase.firestore.fieldValue.arrayUnion(auth.currentUser.email)
-            })
-            .then(() => {
-                this.setState({ liked: true, text: 'Dislike' })
-            })
-    }
     render() {
         return (
             /*<View>
                 {this.state.posteos.map(post => <li>{post.data.product}</li>)}
 
             </View >*/
-            <FlatList
-                data={this.state.posteos}
-                renderItem={({ item }) => 
-                <View>
-                    <Image style={styles.preview} source={ {uri: item.data.url}}/>
-                    <ul>
-                        <li> Descripción: {item.data.Description} </li>
-                        <TouchableOpacity onPress={() => this.Like(item)}>
-                            <Text>{this.state.text}</Text>
-                        </TouchableOpacity>
-                    </ul>
-                </View>}
-            keyExtractor={item => item.id.toString()} />
+            <View>
+            <Text style={styles.title}> Lista de posteos</Text>
+            <FlatList 
+                    data={this.state.posteos}
+                    keyExtractor={ item => item.id.toString()}
+                    renderItem={ ({item}) => <Post postData={item} navigation={this.props.navigation} id={item.id}/>}
+                />  
+            </View>
         )
     }
 }
 const styles = StyleSheet.create({
     
-    preview: {
-        width: '30vw',
-        height: '70vh',
-        position: 'absolute'
+   title:{
+        fontFamily: 'Playfair Display',
+        color:'black',
+        fontSize: 35,   
+        textAlign:'center',
+        fontWeight:'bold'
     }
 })
 

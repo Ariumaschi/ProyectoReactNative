@@ -1,0 +1,129 @@
+import React, {Component} from 'react'
+import { Text, View, TouchableOpacity, StyleSheet, Image, FlatList} from 'react-native'
+import {auth, db} from '../firebase/config'
+import firebase from 'firebase'
+import { FontAwesome } from '@expo/vector-icons';
+
+class Post extends Component {
+    constructor (props){
+        super (props)
+        this.state={
+            likes: 0,
+            myLike: false,
+            comment: ''
+           
+        }
+    }
+componentDidMount() {
+    if (this.props.postData.data.likes) {
+        this.setState({
+            likes: this.props.postData.data.likes.length,
+            myLike: this.props.postData.data.likes.includes(auth.currentUser.email),
+        })
+    }
+}
+
+like(){
+    //agregar mi mailal array
+    db.collection ('posts').doc (this.props.postData.id).update({
+        likes: firebase.firestore.FieldValue.arrayUnion (auth.currentUser.email)
+    })
+    .then(()=> this.setState({
+        //cambiar el estado de likes y de myLike
+       
+        likes: this.props.postData.data.likes.length,
+        myLike: true
+    })
+    )
+    .catch(e=>console.log(e))
+}
+
+unLike(){
+     //Quitar mi email a un array
+    db.collection ('posts').doc (this.props.postData.id).update({
+        likes: firebase.firestore.FieldValue.arrayRemove (auth.currentUser.email)
+    })
+    .then(()=> this.setState({
+         //Cambiar el estado de likes y de mylike.
+        likes: this.props.postData.data.likes.length,
+        myLike: false
+    })
+    )
+    .catch(e=>console.log(e))
+}
+
+
+render(){
+    console.log(this.props);
+    return(
+        <View style={styles.container}>
+            <TouchableOpacity>
+            <Text  style={styles.user}>Subido por: {this.props.postData.data.owner} </Text>
+            </TouchableOpacity>
+            <Image
+                style={styles.img}
+                source={{uri: this.props.postData.data.url}}
+                
+            />
+                 {
+                this.state.myLike ?
+                
+             <TouchableOpacity style={styles.like} onPress={()=> this.unLike()} >
+                <FontAwesome name='heart' color='red' size={28} />
+            </TouchableOpacity>
+                :
+             <TouchableOpacity style={styles.like} onPress={()=> this.like()} >
+                <FontAwesome name='heart-o' color='red' size={28} />
+             </TouchableOpacity>
+            } 
+            <Text style={styles.text}> {this.state.likes} likes</Text>
+            <Text style={styles.text} > Descripción: {this.props.postData.data.Description} </Text>
+ 
+
+            
+            
+           
+                
+        </View>
+    )
+}
+}
+const styles= StyleSheet.create ({
+
+    img:{
+        height:400,
+        width:400,
+        border: '2px solid #ddd',
+        borderRadius:4 ,
+        padding: 5,
+        alignItems:'center'
+          
+    },
+    container:{
+         alignItems:'center'   
+    },
+    text:{
+    marginTop: 0,
+    fontFamily: 'Sans Serif',
+    fontSize:18,
+    color:'black', 
+    marginLeft:'0'   
+    },
+    user:{
+        fontFamily: 'Sans Serif',
+        color:'black',
+        fontSize:20,
+    
+        marginRight:'40%',
+        width:"100%",
+        borderRadius:4
+    },
+    like:{
+        marginRight:'25%',
+        marginTop: 2,
+    }
+
+    
+
+})
+export default Post;
