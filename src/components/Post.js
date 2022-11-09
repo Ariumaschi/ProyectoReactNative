@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Text, View, TouchableOpacity, StyleSheet, Image, FlatList} from 'react-native'
+import { Text, View,TextInput, TouchableOpacity, StyleSheet, Image, FlatList} from 'react-native'
 import {auth, db} from '../firebase/config'
 import firebase from 'firebase'
 import { FontAwesome } from '@expo/vector-icons';
@@ -51,7 +51,27 @@ unLike(){
     )
     .catch(e=>console.log(e))
 }
-
+publicarComentario() {
+    //Armar el comentario.
+    let oneComment = {
+        author: auth.currentUser.email,
+        createdAt: Date.now(),
+        commentText: this.state.comment
+    }
+    //Actualizar comentario en la base. Puntualmente en este documento.
+    //Saber cual es el post que queremos actualizar
+    db.collection('posts').doc(this.props.postData.id).update({
+        comments: firebase.firestore.FieldValue.arrayUnion(oneComment)
+    })
+        .then(() => {
+            //Cambiar un estado para limpiar el form
+            console.log('Comentario guardado');
+            this.setState({
+                comment:''
+            })
+        })
+        .catch(e => console.log(e))
+}
 
 render(){
     console.log(this.props);
@@ -78,7 +98,24 @@ render(){
             } 
             <Text style={styles.text}> {this.state.likes} likes</Text>
             <Text style={styles.text} > Descripción: {this.props.postData.data.Description} </Text>
- 
+            {
+                    this.props.postData.data.comments ?
+                        <FlatList
+                            data={this.props.postData.data.comments}
+                            keyExtractor={post => post.createdAt.toString()}
+                            renderItem={({ item }) => <Text> {item.author}: {item.commentText}</Text>}
+                        /> :
+                        <Text></Text>
+                }
+                    <TextInput keyboardType='default'
+                        placeholder='Escribí tu comentario'
+                        onChangeText={(text) => { this.setState({ comment: text }) }}
+                        value={this.state.comment}
+                    />
+                    <TouchableOpacity onPress={() => this.publicarComentario()}>
+                        <Text style={styles.button} >Comentar</Text>
+                    </TouchableOpacity>
+            
 
             
             
@@ -100,7 +137,7 @@ const styles= StyleSheet.create ({
           
     },
     container:{
-         alignItems:'center'   
+     alignItems:'center',
     },
     text:{
     marginTop: 0,
@@ -121,7 +158,13 @@ const styles= StyleSheet.create ({
     like:{
         marginRight:'25%',
         marginTop: 2,
+    },button:{
+        backgroundColor: 'grey',
+        color: 'black',
+        border: 'none',
+        padding: 5 
     }
+
 
     
 
