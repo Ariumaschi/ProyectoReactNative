@@ -7,7 +7,7 @@ import Profile from './src/screens/Profile';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Component } from 'react';
-import { auth } from '../../practicas/my-app/src/firebase/config';
+import { auth } from './src/firebase/config';
 
 
 

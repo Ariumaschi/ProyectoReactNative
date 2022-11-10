@@ -51,7 +51,6 @@ class Profile extends Component {
                 this.setState({
                     posteos: posts,
                 })
-
             })
     }
    
