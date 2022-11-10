@@ -23,7 +23,7 @@ class Register extends Component {
                         bio: this.state.bio,
                         userName: this.state.userName,
                         createdAt: Date.now(),
-                        email: this.state.email,
+                        owner: this.state.email,
                         url: this.state.url
                     })
                 this.props.navigation.navigate('Main');

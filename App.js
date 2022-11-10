@@ -6,10 +6,16 @@ import Home from './src/screens/Home';
 import Profile from './src/screens/Profile';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Component } from 'react';
+import { auth } from '../../practicas/my-app/src/firebase/config';
 
 
 
-export default function App() {
+export default class App extends Component {
+componentDidMount(){
+  auth.onAuthStateChanged(user => {});
+}
+render(){
   const Stack = createNativeStackNavigator();
 
   return (
@@ -23,5 +29,8 @@ export default function App() {
       </Stack.Navigator>
     </NavigationContainer>
   );
+  
+}
+  
 }
 

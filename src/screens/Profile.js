@@ -10,26 +10,28 @@ class Profile extends Component {
             nombre: '',
             userName:'',
             bio:'',
+            email:'',
             posteos:[]
         }
     }
     componentDidMount() {
         const email = auth.currentUser.email;
+        console.log(auth.currentUser);
         
         db.collection('users').onSnapshot(
             docs => {//todos datos de la colección
                 let user;
-                
+                //CAMBIAR POR WHERE
                 docs.forEach(doc => { //por cada documento, quiero un doc y la función que ejecutaré por cada doc
                     const data = doc.data();
                     
-                    if (data.email === email) {
+                    if (data.owner === email) {
                         user = data
                     }
                 });
-
+                
                 this.setState({
-                    nombre: user.email,
+                    nombre: user.owner,
                     userName: user.userName,
                     bio:user.bio
                 });
@@ -62,7 +64,7 @@ class Profile extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={styles.container} >
             
                 <Text style={styles.text}>Nombre del usuario:{this.state.nombre}</Text>
                 <Text style={styles.text} >userName:{this.state.userName}</Text>
@@ -84,6 +86,7 @@ class Profile extends Component {
 
 const styles = StyleSheet.create({
     container: {
+        flex:1,
         backgroundColor:'white',
         alignItems:'left' ,
         marginLeft: 5 /*

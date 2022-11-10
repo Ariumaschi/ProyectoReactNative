@@ -37,7 +37,7 @@ class Posts extends Component {
                 {this.state.posteos.map(post => <li>{post.data.product}</li>)}
 
             </View >*/
-            <View>
+            <View style={styles.view}>
             <Text style={styles.title}> Lista de posteos</Text>
             <FlatList 
                     data={this.state.posteos}
@@ -56,6 +56,9 @@ const styles = StyleSheet.create({
         fontSize: 35,   
         textAlign:'center',
         fontWeight:'bold'
+    },
+    view:{
+        flex:1
     }
 })
 
