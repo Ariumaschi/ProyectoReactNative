@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, TextInput} from 'react-native';
 import { doc, updateDoc } from "firebase/firestore";
 import { db, auth } from '../firebase/config'
 import Post from '../components/Post';
+import { SearchBar } from 'react-native-screens';
 
 class Posts extends Component {
 

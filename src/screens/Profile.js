@@ -14,6 +14,7 @@ class Profile extends Component {
             posteos:[]
         }
     }
+    
     componentDidMount() {
         const email = auth.currentUser.email;
         console.log(auth.currentUser);

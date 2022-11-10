@@ -21,8 +21,8 @@ class AddPost extends Component {
             createdAt: Date.now(),
             likes: [],
         })
-            .then(this.props.navigation.navigate('Posts'))
-            .catch(e => console.log(e))
+        .catch(e => console.log(e))
+        this.props.navigation.navigate('Profile')
     }
 
     onImageUpload(url) {

@@ -25,7 +25,7 @@ componentDidMount() {
 
 like(){
     //agregar mi mailal array
-    db.collection ('posts').doc (this.props.postData.id).update({
+    db.collection('posts').doc(this.props.postData.id).update({
         likes: firebase.firestore.FieldValue.arrayUnion (auth.currentUser.email)
     })
     .then(()=> this.setState({
@@ -40,7 +40,7 @@ like(){
 
 unLike(){
      //Quitar mi email a un array
-    db.collection ('posts').doc (this.props.postData.id).update({
+    db.collection('posts').doc(this.props.postData.id).update({
         likes: firebase.firestore.FieldValue.arrayRemove (auth.currentUser.email)
     })
     .then(()=> this.setState({
