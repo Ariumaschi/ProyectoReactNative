@@ -7,6 +7,7 @@ class Profile extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            user:[],
             nombre: '',
             userName:'',
             bio:'',
@@ -19,7 +20,7 @@ class Profile extends Component {
         const email = auth.currentUser.email;
         console.log(auth.currentUser);
         
-        db.collection('users').onSnapshot(
+        db.collection('users').where('owner', '==', this.props.route.params == undefined ? email : this.props.route.params.email).onSnapshot(
             docs => {//todos datos de la colección
                 let user;
                 //CAMBIAR POR WHERE
@@ -38,9 +39,10 @@ class Profile extends Component {
                 });
             }
         )
-        db.collection('posts').onSnapshot(
+        db.collection('posts').where('owner', '==', this.props.route.params == undefined ? email : this.props.route.params.email).onSnapshot(
             docs => {
                 let posts = [];
+          
                 docs.forEach(doc => {
                     
                     posts.push({
