@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Text, View,TextInput, TouchableOpacity, StyleSheet, Image, FlatList} from 'react-native'
-import {auth, db} from '../firebase/config'
+import {auth, db} from '../firebase/config';
 import firebase from 'firebase'
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -21,6 +21,7 @@ componentDidMount() {
             myLike: this.props.postData.data.likes.includes(auth.currentUser.email),
         })
     }
+    console.log(this.props.postData.data.comments)
 }
 
 like(){
@@ -82,13 +83,12 @@ render(){
             </TouchableOpacity>
             <Image
                 style={styles.img}
-                source={{uri: this.props.postData.data.url}}
-                
+                source={{uri: this.props.postData.data.url}} 
             />
-                 {
+            {
                 this.state.myLike ?
                 
-             <TouchableOpacity style={styles.like} onPress={()=> this.unLike()} >
+            <TouchableOpacity style={styles.like} onPress={()=> this.unLike()} >
                 <FontAwesome name='heart' color='red' size={28} />
             </TouchableOpacity>
                 :
@@ -97,16 +97,20 @@ render(){
              </TouchableOpacity>
             } 
             <Text style={styles.text}> {this.state.likes} likes</Text>
-            <Text style={styles.text} > Descripción: {this.props.postData.data.Description} </Text>
+            <Text style={styles.text}> Descripción: {this.props.postData.data.Description} </Text>
             {
-                    this.props.postData.data.comments ?
+                this.props.postData.data.comments ?
+                    <React.Fragment>
                         <FlatList
-                            data={this.props.postData.data.comments}
+                            data={this.props.postData.data.comments.slice(-4)}
                             keyExtractor={post => post.createdAt.toString()}
                             renderItem={({ item }) => <Text> {item.author}: {item.commentText}</Text>}
-                        /> :
-                        <Text></Text>
-                }
+                        /> 
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Comment', {id: this.props.id})}>Más comentarios</TouchableOpacity>
+                    </React.Fragment>
+                        :
+                        <Text>No hay comentarios</Text>
+            }
                     <TextInput keyboardType='default'
                         placeholder='Escribí tu comentario'
                         onChangeText={(text) => { this.setState({ comment: text }) }}
@@ -114,13 +118,7 @@ render(){
                     />
                     <TouchableOpacity onPress={() => this.publicarComentario()}>
                         <Text style={styles.button} >Comentar</Text>
-                    </TouchableOpacity>
-            
-
-            
-            
-           
-                
+                    </TouchableOpacity>       
         </View>
     )
 }
