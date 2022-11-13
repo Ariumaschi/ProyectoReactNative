@@ -1,24 +1,33 @@
 import React, { Component } from 'react';
 import { auth, db } from '../firebase/config';
+import MyCamera from '../components/Camera';
+
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
 class Register extends Component {
-    constructor(){
+    constructor() {
         super()
         this.state = {
-            email:'',
-            pass:'',
-            userName:'',
-            errors:'',
+            email: '',
+            pass: '',
+            userName: '',
+            errors: '',
             bio: '',
-            url: ''
+            url: '',
+            showCamera: true,
         }
     }
-
-    registerUser(email, pass, username){
-        if(username != null){
+    onImageUpload(url) {
+        console.log(url)
+        this.setState({
+            showCamera: false,
+            url: url
+        });
+    }
+    registerUser(email, pass, username) {
+        if (username != null) {
             auth.createUserWithEmailAndPassword(email, pass)
-                .then( res => {
+                .then(res => {
                     db.collection('users').add({
                         bio: this.state.bio,
                         userName: this.state.userName,
@@ -26,59 +35,61 @@ class Register extends Component {
                         owner: this.state.email,
                         url: this.state.url
                     })
-                this.props.navigation.navigate('Main');
+                    this.props.navigation.navigate('Main');
                 })
-            .catch(error => this.setState({errors: error.message}))
-        }else{
+                .catch(error => this.setState({ errors: error.message }))
+        } else {
             this.setState({
                 errors: 'Username not provided.'
             })
         }
     }
 
-    render(){
-        return(
-            <View style={styles.container}> 
+    render() {
+        return (
+            <View style={styles.container}>
                 <Text>Registro</Text>
                 <View style={styles.box}>
                     <Text style={styles.alert}>{this.state.errors}</Text>
-                    <TextInput  
+                    <TextInput
                         placeholder='email'
                         keyboardType='email-address'
-                        onChangeText={ text => this.setState({email:text}) }
+                        onChangeText={text => this.setState({ email: text })}
                         value={this.state.email}
                         style={styles.input}
-                    /> 
-                    <TextInput  
+                    />
+                    <TextInput
                         placeholder='password'
                         keyboardType='default'
-                        onChangeText={ text => this.setState({pass:text}) }
+                        onChangeText={text => this.setState({ pass: text })}
                         value={this.state.pass}
-                        style={styles.input} 
-                    /> 
-                    <TextInput  
+                        style={styles.input}
+                    />
+                    <TextInput
                         placeholder='username'
                         keyboardType='default'
-                        onChangeText={ text => this.setState({userName:text}) }
+                        onChangeText={text => this.setState({ userName: text })}
                         value={this.state.userName}
-                        style={styles.input} 
-                    />                      
-                    <TextInput  
+                        style={styles.input}
+                    />
+                    <TextInput
                         placeholder='bio'
                         keyboardType='default'
-                        onChangeText={ text => this.setState({bio:text}) }
+                        onChangeText={text => this.setState({ bio: text })}
                         value={this.state.bio}
-                        style={styles.input} 
-                    />                      
+                        style={styles.input}
+                    />
+
+                    <MyCamera onImageUpload={(url) => this.onImageUpload(url)} />
                     <TouchableOpacity onPress={() => this.registerUser(this.state.email, this.state.pass, this.state.userName)}>
                         <Text style={styles.button}>Registrarme</Text>
                     </TouchableOpacity>
 
                 </View>
-                    <Text onPress={ () => this.props.navigation.navigate('Login')} > Ir a login </Text>
+                <Text onPress={() => this.props.navigation.navigate('Login')} > Ir a login </Text>
             </View>
         )
-    }   
+    }
 }
 
 const styles = StyleSheet.create({
@@ -87,7 +98,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         marginTop: 10,
         justifyContent: 'center',
-        alignItems:'center',
+        alignItems: 'center',
         backgroundColor: 'white',
         height: '100%'
     },
@@ -96,7 +107,7 @@ const styles = StyleSheet.create({
         width: '80%',
         borderRadius: '5%',
         justifyContent: 'center',
-        alignItems:'center',
+        alignItems: 'center',
         margin: '8%'
     },
     input: {
