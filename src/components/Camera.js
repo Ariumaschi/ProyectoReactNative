@@ -50,6 +50,12 @@ class MyCamera extends Component {
             })
             .catch(e => console.log(e))
     }
+    rechazar(){
+        this.setState({
+            photo: '',
+            showCamera:true 
+        })
+    }
 
     render() {
         return (
@@ -67,7 +73,7 @@ class MyCamera extends Component {
 
                         <TouchableOpacity
                             style={styles.shootButton}
-                            onClick={() => this.props.navigation.navigate('Home')}>
+                            onPress={() => this.rechazar()}>
                             <Text>Rechazar</Text>
                         </TouchableOpacity>
                     </View> :

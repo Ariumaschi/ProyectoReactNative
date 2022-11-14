@@ -21,7 +21,7 @@ class AddPost extends Component {
             createdAt: Date.now(),
             likes: [],
         })
-        .catch(e => console.log(e))
+            .catch(e => console.log(e))
         this.props.navigation.navigate('Profile')
     }
 
@@ -35,22 +35,27 @@ class AddPost extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <TextInput
-                    style={styles.field}
-                    keyboardType='text'
-                    placeholder='Description'
-                    onChangeText={text => this.setState({ Description: text })}
-                    value={this.state.Product}
-                />
+            <View>
+            {this.state.showCamera
+                    ?
+                    <MyCamera onImageUpload={(url) => this.onImageUpload(url)} />
 
-                <MyCamera onImageUpload={(url) => this.onImageUpload(url)} />
+                    :
+                    <View style={styles.container}>
+                        <TextInput
+                            style={styles.field}
+                            keyboardType='text'
+                            placeholder='Description'
+                            onChangeText={text => this.setState({ Description: text })}
+                            value={this.state.Product}
+                        />
 
-                <TouchableOpacity onPress={() => this.onSubmit()}>
-                    <Text>Publicar</Text>
-                </TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.onSubmit()}>
+                            <Text>Publicar</Text>
+                        </TouchableOpacity>
 
-            </View >
+                    </View >
+            }</View>
         )
     }
 }
