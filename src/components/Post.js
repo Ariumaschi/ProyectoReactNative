@@ -78,7 +78,7 @@ render(){
     //console.log(this.props);
     return(
         <View style={styles.container}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('OtherProfile', {email: this.props.postData.data.owner})}>
             <Text  style={styles.user}>Subido por: {this.props.postData.data.owner} </Text>
             </TouchableOpacity>
             <Image

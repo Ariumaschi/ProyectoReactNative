@@ -5,6 +5,8 @@ import Main from './src/screens/Main';
 import Home from './src/screens/Home';
 import Profile from './src/screens/Profile';
 import Comment from './src/screens/Comment';
+import OtherProfile from './src/screens/OtherProfile';
+import MyCamera from './src/components/Camera';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Component } from 'react';
@@ -13,26 +15,27 @@ import { auth } from './src/firebase/config';
 
 
 export default class App extends Component {
-componentDidMount(){
-  auth.onAuthStateChanged(user => {});
-}
-render(){
-  const Stack = createNativeStackNavigator();
+  componentDidMount() {
+    auth.onAuthStateChanged(user => { });
+  }
+  render() {
+    const Stack = createNativeStackNavigator();
 
-  return (
-    <NavigationContainer>
-      <Stack.Navigator >
-        <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
-         <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
-        <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
-        <Stack.Screen name="Comment" component={Comment} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-  
-}
-  
-}
+    return (
+      <NavigationContainer>
+        <Stack.Navigator >
+          <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
+          <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
+          <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
+          <Stack.Screen name="Comment" component={Comment} options={{ headerShown: false }} />
+          <Stack.Screen name="OtherProfile" component={OtherProfile} options={{ headerShown: false }} />
+          <Stack.Screen name="MyCamera" component={MyCamera} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
 
+  }
+
+}
