@@ -2,7 +2,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
 import Main from './src/screens/Main';
-import Home from './src/screens/Home';
 import Profile from './src/screens/Profile';
 import Comment from './src/screens/Comment';
 import OtherProfile from './src/screens/OtherProfile';
@@ -24,7 +23,6 @@ export default class App extends Component {
     return (
       <NavigationContainer>
         <Stack.Navigator >
-          <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
           <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
           <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
