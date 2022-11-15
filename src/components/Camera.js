@@ -38,22 +38,22 @@ class MyCamera extends Component {
         fetch(this.state.photo)
             .then(res => res.blob())
             .then(image => {
-            const ref = storage.ref(`photos/${Date.now()}.jpg`)
-            ref.put(image)
-            .then(() => {
-                ref.getDownloadURL()
-                    .then(url => {
-                        console.log(url)
-                        this.props.onImageUpload(url);
+                const ref = storage.ref(`photos/${Date.now()}.jpg`)
+                ref.put(image)
+                    .then(() => {
+                        ref.getDownloadURL()
+                            .then(url => {
+                                console.log(url)
+                                this.props.onImageUpload(url);
+                            })
                     })
-                })
             })
             .catch(e => console.log(e))
     }
-    rechazar(){
+    rechazar() {
         this.setState({
             photo: '',
-            showCamera:true 
+            showCamera: true
         })
     }
 
@@ -66,13 +66,13 @@ class MyCamera extends Component {
                             source={{ uri: this.state.photo }}
                         />
                         <TouchableOpacity
-                            style={styles.shootButton}
+                            style={styles.Button}
                             onPress={() => this.savePhoto()}>
                             <Text>Aceptar</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            style={styles.shootButton}
+                            style={styles.Button}
                             onPress={() => this.rechazar()}>
                             <Text>Rechazar</Text>
                         </TouchableOpacity>
@@ -98,17 +98,36 @@ class MyCamera extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#FF1493',
+        borderRadius: '5%',
+        height: '150vw',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: '8%',
+        display: 'flex',
+    },
     cameraBody: {
-        width: '100%',
-        height: '70vh',
-        position: 'absolute'
+        width: '65vw',
+        height: '55vh',
+        position: 'absolute',
+
     },
 
     preview: {
         width: '100%',
         height: '70vh',
         position: 'absolute'
+    },
+
+    shootButton: {
+        marginTop: '200%'
+    },
+    button: {
+        width: '65vw',
+        height: '55vh',
+        position: 'absolute',
+        padding: '30px'
     }
 })
-
 export default MyCamera;
