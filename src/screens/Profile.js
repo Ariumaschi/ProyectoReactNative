@@ -66,41 +66,47 @@ class Profile extends Component {
         this.props.navigation.navigate('Login')
     }
 
-    deletePost(id){
+    deletePost(id) {
         db.collection('posts').doc(id).delete()
     }
+
+
 
     render() {
         return (
             <View style={styles.container} >
-            <View style={styles.containerBio}>
-                <Image style={styles.img} source={{ uri: this.state.url }}/>
-                <Text style={styles.text}>{this.state.nombre}</Text>
-                <Text style={styles.text} >{this.state.userName}</Text>
-                <Text style={styles.text} >"{this.state.bio}"</Text>
-                <TouchableOpacity onPress={() => this.logOut()}>
-                    <Text style={styles.button}><button>Logout</button></Text>
-                </TouchableOpacity>
-            </View>
+                <View style={styles.containerBio}>
+                    <Image style={styles.img} source={{ uri: this.state.url }} />
+                    <Text style={styles.text}>{this.state.nombre}</Text>
+                    <Text style={styles.text} >{this.state.userName}</Text>
+                    <Text style={styles.text} >"{this.state.bio}"</Text>
+                    <TouchableOpacity onPress={() => this.logOut()}>
+                        <Text style={styles.button}><button>Logout</button></Text>
+                    </TouchableOpacity>
+                </View>
                 <FlatList
                     data={this.state.posteos}
                     keyExtractor={item => item.id.toString()}
                     renderItem={({ item }) => <View><Text style={styles.button} onPress={() => this.deletePost(item.id)}><button>Borrar</button></Text><Post postData={item} navigation={this.props.navigation} id={item.id} /></View>}
                 />
+
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('editProfile', { id: this.props.id})}>
+                    <Text style={styles.button}><button>Editar</button></Text>
+                </TouchableOpacity>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    
-    img:{
-        height:200,
-        width:200,
+
+    img: {
+        height: 200,
+        width: 200,
         border: '2px solid #ddd',
         borderRadius: '50%',
         padding: 5,
-        alignItems:'center',
+        alignItems: 'center',
         margin: '3%'
     },
     container: {
@@ -117,7 +123,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center'
     },
-     text: {
+    text: {
         fontFamily: 'Playfair Display',
         color: 'black',
         fontSize: 20

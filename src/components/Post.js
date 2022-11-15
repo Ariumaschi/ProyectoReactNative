@@ -21,7 +21,6 @@ componentDidMount() {
             myLike: this.props.postData.data.likes.includes(auth.currentUser.email),
         })
     }
-    console.log(this.props.postData.data.comments)
 }
 
 like(){
