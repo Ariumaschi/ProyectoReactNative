@@ -1,35 +1,71 @@
 import React, { Component } from 'react';
 import { auth, db } from '../firebase/config';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { getAuth, updatePassword } from "firebase/auth";
+import firebase from 'firebase';
+
+
 
 class editProfile extends Component {
     constructor(props) {
         super(props)
         this.state = {
             email: '',
-            pass: '',
+            passActual: "",
             userName: '',
             errors: '',
             bio: '',
-            id: this.props.route.params.id
+            idUser: this.props.route.params.idUser,
+            newPass: '',
         }
     }
 
+    // Reautenticacion del usuario
+    reauthenticate = (passActual) => {
+        const user = firebase.auth().currentUser;
+        const cred = firebase.auth.EmailAuthProvider.credential(user.email, passActual);
+        return user.reauthenticateWithCredential(cred);
+    }
 
+    changePass = () => {
+        this.reauthenticate(this.state.passActual)
+            .then(() => {
+                auth.currentUser.updatePassword(this.state.newPass)
+                    .then(() => {
+                        Alert.alert("Constraseña cambiada");
+                    })
+                    .catch((e) => { console.log(e); });
+            })
+            .catch((e) => { console.log(e) });
+    }
+
+/*
+    // Changes user's email...
+    onChangeEmailPress = () => {
+        this.reauthenticate(this.state.passActual).then(() => {
+            var user = firebase.auth().currentUser;
+            user.updateEmail(this.state.email).then(() => {
+                Alert.alert("Email was changed");
+            }).catch((error) => { console.log(error.message); });
+        }).catch((error) => { console.log(error.message) });
+    }
+*/
     editar() {
+
         db.collection('users')
-            .doc(this.state.id)
+            .doc(this.state.idUser)
             .update({
-                email: this.state.email,
                 userName: this.state.userName,
                 bio: this.state.bio,
+
             })
             .then(() => {
-                console.lod(editado)
                 this.props.navigation.navigate('Profile');
             })
 
     }
+
+
 
 
     render() {
@@ -38,13 +74,27 @@ class editProfile extends Component {
                 <Text>Editar datos</Text>
                 <View style={styles.box}>
                     <Text style={styles.alert}>{this.state.errors}</Text>
+
                     <TextInput
-                        placeholder='email'
-                        keyboardType='email-address'
-                        onChangeText={text => this.setState({ email: text })}
-                        value={this.state.email}
                         style={styles.input}
+                        value={this.state.passActual}
+                        placeholder="Contraseña Actual" autoCapitalize="none" secureTextEntry={true}
+                        onChangeText={(text) => { this.setState({ passActual: text }) }}
                     />
+                    <TextInput
+                        style={styles.input}
+                        value={this.state.newPassword}
+                        placeholder="New Password"
+                        autoCapitalize="none"
+                        secureTextEntry={true}
+                        onChangeText={(text) => { this.setState({ newPass: text }) }}
+
+                    />
+                    <TouchableOpacity onPress={() => this.changePass()}>
+                        <Text style={styles.button}>Cambiar Contraseña</Text>
+                    </TouchableOpacity>
+
+
 
                     <TextInput
                         placeholder='username'
@@ -60,6 +110,7 @@ class editProfile extends Component {
                         value={this.state.bio}
                         style={styles.input}
                     />
+
 
                     <TouchableOpacity onPress={() => this.editar()}>
                         <Text style={styles.button}>Finalizar Edición</Text>

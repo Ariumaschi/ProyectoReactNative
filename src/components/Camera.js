@@ -66,13 +66,13 @@ class MyCamera extends Component {
                             source={{ uri: this.state.photo }}
                         />
                         <TouchableOpacity
-                            style={styles.Button}
+                            style={styles.button}
                             onPress={() => this.savePhoto()}>
                             <Text>Aceptar</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            style={styles.Button}
+                            style={styles.button}
                             onPress={() => this.rechazar()}>
                             <Text>Rechazar</Text>
                         </TouchableOpacity>
@@ -126,7 +126,6 @@ const styles = StyleSheet.create({
     button: {
         width: '65vw',
         height: '55vh',
-        position: 'absolute',
         padding: '30px'
     }
 })

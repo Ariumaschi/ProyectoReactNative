@@ -15,7 +15,6 @@ class Login extends Component {
   componentDidMount() {
     if (auth.currentUser) {
         auth.onAuthStateChanged(user => {
-            console.log(user.email)
         })
         this.props.navigation.navigate('Main')
     }

@@ -8,37 +8,45 @@ class Profile extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            user: [],
-            nombre: '',
+            data: [],
+            mail: '',
             userName: '',
             bio: '',
-            email: '',
             url: '',
-            posteos: []
+            posteos: [],
+            idUser: ''
         }
     }
 
     componentDidMount() {
         const email = auth.currentUser.email;
-        console.log(auth.currentUser);
+
 
         db.collection('users').where('owner', '==', email).onSnapshot(
             docs => {//todos datos de la colección
                 let user;
+                let idUser;
                 //CAMBIAR POR WHERE
                 docs.forEach(doc => { //por cada documento, quiero un doc y la función que ejecutaré por cada doc
                     const data = doc.data();
+                    const id = doc.id;
 
                     if (data.owner === email) {
-                        user = data
-                    }
+                        user = data;
+                        idUser = id;
+                        console.log('todo okkkkk');
+                    } 
+
                 });
 
                 this.setState({
-                    nombre: user.owner,
+                    data: user,
+                    mail: user.owner,
                     userName: user.userName,
                     bio: user.bio,
-                    url: user.url
+                    url: user.url,
+                    idUser: idUser
+                    
                 });
             }
         )
@@ -90,7 +98,7 @@ class Profile extends Component {
                     renderItem={({ item }) => <View><Text style={styles.button} onPress={() => this.deletePost(item.id)}><button>Borrar</button></Text><Post postData={item} navigation={this.props.navigation} id={item.id} /></View>}
                 />
 
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('editProfile', { id: this.props.id})}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('editProfile', {idUser: this.state.idUser})}>
                     <Text style={styles.button}><button>Editar</button></Text>
                 </TouchableOpacity>
             </View>

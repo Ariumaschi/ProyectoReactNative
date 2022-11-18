@@ -16,7 +16,7 @@ import editProfile from './src/screens/editProfile';
 
 export default class App extends Component {
   componentDidMount() {
-    auth.onAuthStateChanged(user => { });
+    auth.onAuthStateChanged(user => { }); //si queremos acceder a auth.currentuser a veces nos tira error a pesar de que el usuario ete logueado y esto nos soluciona el error//
   }
   render() {
     const Stack = createNativeStackNavigator();
