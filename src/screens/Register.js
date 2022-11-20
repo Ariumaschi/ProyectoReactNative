@@ -18,7 +18,6 @@ class Register extends Component {
         }
     }
     onImageUpload(url) {
-        console.log(url)
         this.setState({
             showCamera: false,
             url: url

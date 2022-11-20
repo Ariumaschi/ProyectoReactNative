@@ -20,7 +20,6 @@ class OtherProfile extends Component {
 
     componentDidMount() {
         const email = this.props.route.params.email;
-        console.log(email)
 
 
         db.collection('users').where('owner', '==', email).onSnapshot(
