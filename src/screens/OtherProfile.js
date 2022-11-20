@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, FlatList, Text, TextInput, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { db, auth } from '../firebase/config';
 import Post from '../components/Post';
+import { AntDesign } from '@expo/vector-icons';
 
 class OtherProfile extends Component {
     constructor(props) {
@@ -10,7 +11,6 @@ class OtherProfile extends Component {
             user: [],
             nombre: '',
             userName: '',
-
             bio: '',
             email: '',
             url: '',
@@ -74,49 +74,51 @@ class OtherProfile extends Component {
     render() {
         return (
             <View style={styles.container} >
-                <Image
-                    style={styles.img}
-                    source={{ uri: this.state.url }}
-                />
-                <Text style={styles.text}>Nombre del usuario:{this.state.nombre}</Text>
-                <Text style={styles.text} >userName:{this.state.userName}</Text>
-                <Text style={styles.text} >Bio:{this.state.bio}</Text>
-                <TouchableOpacity onPress={() => this.logOut()}>
-                    <Text style={styles.button} >  <button>Logout</button></Text>
-                </TouchableOpacity>
+                <AntDesign name="left" size={24} color="black" onPress={() => this.props.navigation.navigate('Home')} style={styles.back}/>
+                <View style={styles.containerBio}>
+                    <Image
+                        style={styles.img}
+                        source={{ uri: this.state.url }}
+                    />
+                    <Text style={styles.text}>Nombre del usuario:{this.state.nombre}</Text>
+                    <Text style={styles.text} >userName:{this.state.userName}</Text>
+                    <Text style={styles.text} >Bio:{this.state.bio}</Text>
+                    <TouchableOpacity onPress={() => this.logOut()}>
+                        <Text style={styles.button} >  <button>Logout</button></Text>
+                    </TouchableOpacity>
+                </View>
                 <FlatList
                     data={this.state.posteos}
                     keyExtractor={item => item.id.toString()}
                     renderItem={({ item }) => <Post postData={item} navigation={this.props.navigation} id={item.id} />}
                 />
             </View>
-
         )
     }
-
 }
 
 const styles = StyleSheet.create({
 
     img: {
-        height: 400,
-        width: 400,
+        height: 200,
+        width: 200,
         border: '2px solid #ddd',
-        borderRadius: 4,
+        borderRadius: '50%',
         padding: 5,
-        alignItems: 'center'
-
+        alignItems: 'center',
+        margin: '3%'
     },
     container: {
         flex: 1,
         backgroundColor: 'white',
         alignItems: 'left',
-        marginLeft: 5 /*
-        paddingHorizontal: 10,
-        marginTop: 10,
+        marginLeft: 5
+    },
+    containerBio: {
         display: 'flex',
-        flexDirection: 'row',*/
-    }, text: {
+        alignItems: 'center'
+    },
+    text: {
         fontFamily: 'Playfair Display',
         color: 'black',
         fontSize: 20
@@ -126,6 +128,9 @@ const styles = StyleSheet.create({
         color: 'white',
         border: 'none',
         padding: 5
+    },
+    back: {
+        margin: '4%'
     }
 })
 

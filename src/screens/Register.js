@@ -80,16 +80,14 @@ class Register extends Component {
                         value={this.state.bio}
                         style={styles.input}
                     />
- {this.state.showCamera
+                    {this.state.showCamera
                     ?
-                    <MyCamera onImageUpload={(url) => this.onImageUpload(url)} />
-
+                    <MyCamera onImageUpload={(url) => this.onImageUpload(url)} style={styles.camera}/>
                     :
-                   
                     <TouchableOpacity onPress={() => this.registerUser(this.state.email, this.state.pass, this.state.userName)}>
                         <Text style={styles.button}>Registrarme</Text>
                     </TouchableOpacity>
-    }
+                    }
                 </View>
                 <Text onPress={() => this.props.navigation.navigate('Login')} > Ir a login </Text>
             </View>
@@ -121,7 +119,7 @@ const styles = StyleSheet.create({
         width: '80%',
         height: '5%',
         padding: '5%',
-        margin: '8%'
+        margin: '5%'
     },
     alert: {
         color: 'white'
@@ -129,6 +127,9 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: 'white',
         borderRadius: '5%'
+    },
+    camera: {
+        height: '1000'
     }
 })
 

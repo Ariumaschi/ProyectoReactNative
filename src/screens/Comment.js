@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from "react-native";
 import { db, auth } from "../firebase/config";
 import firebase from 'firebase';
+import { AntDesign } from '@expo/vector-icons';
 
 class Comment extends Component {
   constructor(props) {
@@ -46,12 +47,13 @@ class Comment extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>{this.state.data.Description}</Text>
+        <AntDesign name="left" size={24} color="black" onPress={() => this.props.navigation.navigate('Home')} style={styles.back}/>
+        <Text style={styles.description}>{this.state.data.Description}</Text>
         <FlatList data={this.state.data.comments} keyExtractor={(post) => post.createdAt.toString()} renderItem={({ item }) => (
         <Text> {" "} {item.author}: {item.commentText} </Text>)}/>
-        <TextInput keyboardType='default' placeholder='Escribí tu comentario' onChangeText={(text) => { this.setState({ comment: text }) }} value={this.state.comment}/>
+        <TextInput keyboardType='default' placeholder='Escribí tu comentario' onChangeText={(text) => { this.setState({ comment: text }) }} value={this.state.comment} style={styles.input}/>
         <TouchableOpacity onPress={() => this.publicarComentario()}>
-            <Text style={styles.button} >Comentar</Text>
+            <Text style={styles.button}>Comentar</Text>
         </TouchableOpacity>
       </View>
     );
@@ -62,15 +64,28 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
     marginTop: 10,
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
-    height: "100%",
+    backgroundColor: "white"
   },
-  logo: {
-    width: 500,
-    height: 500,
+  button: {
+    backgroundColor: 'pink',
+    borderRadius: '5%'
   },
+  input: {
+    borderRadius: 5,
+    backgroundColor: 'white',
+    width: '80%',
+    height: '5%',
+    padding: '5%',
+    margin: '8%'
+  },
+  back: {
+    margin: '4%'
+  },
+  description: {
+      fontWeight: 'bold',
+      margin: '4%'
+  }
 });
 
 export default Comment;

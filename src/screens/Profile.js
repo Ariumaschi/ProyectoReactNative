@@ -121,11 +121,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         alignItems: 'left',
-        marginLeft: 5 /*
-        paddingHorizontal: 10,
-        marginTop: 10,
-        display: 'flex',
-        flexDirection: 'row',*/
+        marginLeft: 5
     },
     containerBio: {
         display: 'flex',
