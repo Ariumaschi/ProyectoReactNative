@@ -16,7 +16,9 @@ class Comment extends Component {
   }
 
   componentDidMount() {
-    db.collection("posts").doc(this.state.id).onSnapshot((doc) => {
+    db.collection("posts")
+    .doc(this.state.id)
+    .onSnapshot((doc) => {
         this.setState({
           data: doc.data(),
         });
@@ -24,19 +26,19 @@ class Comment extends Component {
   }
 
   publicarComentario() {
-    //Armar el comentario.
+
     let oneComment = {
         author: auth.currentUser.email,
         createdAt: Date.now(),
         commentText: this.state.comment
     }
-    //Actualizar comentario en la base. Puntualmente en este documento.
-    //Saber cual es el post que queremos actualizar
-    db.collection('posts').doc(this.state.id).update({
+
+    db.collection('posts')
+    .doc(this.state.id)
+    .update({
         comments: firebase.firestore.FieldValue.arrayUnion(oneComment)
     })
         .then(() => {
-            //Cambiar un estado para limpiar el form
             this.setState({
                 comment:''
             })
@@ -49,8 +51,11 @@ class Comment extends Component {
       <View style={styles.container}>
         <AntDesign name="left" size={24} color="black" onPress={() => this.props.navigation.navigate('Home')} style={styles.back}/>
         <Text style={styles.description}>{this.state.data.Description}</Text>
-        <FlatList data={this.state.data.comments} keyExtractor={(post) => post.createdAt.toString()} renderItem={({ item }) => (
-        <Text> {" "} {item.author}: {item.commentText} </Text>)}/>
+        <FlatList 
+        data={this.state.data.comments} 
+        keyExtractor={(post) => post.createdAt.toString()} 
+        renderItem={({ item }) => (<Text> {item.author}: {item.commentText} </Text>)}/>
+
         <TextInput keyboardType='default' placeholder='Escribí tu comentario' onChangeText={(text) => { this.setState({ comment: text }) }} value={this.state.comment} style={styles.input}/>
         <TouchableOpacity onPress={() => this.publicarComentario()}>
             <Text style={styles.button}>Comentar</Text>

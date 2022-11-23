@@ -24,13 +24,12 @@ componentDidMount() {
 }
 
 like(){
-    //agregar mi mailal array
-    db.collection('posts').doc(this.props.postData.id).update({
+    db.collection('posts')
+    .doc(this.props.postData.id)
+    .update({
         likes: firebase.firestore.FieldValue.arrayUnion (auth.currentUser.email)
     })
     .then(()=> this.setState({
-        //cambiar el estado de likes y de myLike
-       
         likes: this.props.postData.data.likes.length,
         myLike: true
     })
@@ -39,12 +38,12 @@ like(){
 }
 
 unLike(){
-     //Quitar mi email a un array
-    db.collection('posts').doc(this.props.postData.id).update({
+    db.collection('posts')
+    .doc(this.props.postData.id)
+    .update({
         likes: firebase.firestore.FieldValue.arrayRemove (auth.currentUser.email)
     })
     .then(()=> this.setState({
-         //Cambiar el estado de likes y de mylike.
         likes: this.props.postData.data.likes.length,
         myLike: false
     })
@@ -52,20 +51,15 @@ unLike(){
     .catch(e=>console.log(e))
 }
 publicarComentario() {
-    //Armar el comentario.
     let oneComment = {
         author: auth.currentUser.email,
         createdAt: Date.now(),
         commentText: this.state.comment
     }
-    //Actualizar comentario en la base. Puntualmente en este documento.
-    //Saber cual es el post que queremos actualizar
     db.collection('posts').doc(this.props.postData.id).update({
         comments: firebase.firestore.FieldValue.arrayUnion(oneComment)
     })
         .then(() => {
-            //Cambiar un estado para limpiar el form
-            console.log('Comentario guardado');
             this.setState({
                 comment:''
             })

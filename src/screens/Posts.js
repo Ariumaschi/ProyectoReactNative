@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, TextInput} from 'react-native';
-import { doc, updateDoc } from "firebase/firestore";
-import { db, auth } from '../firebase/config'
+import { View, Text, FlatList, StyleSheet} from 'react-native';
+import { db, } from '../firebase/config'
 import Post from '../components/Post';
-import { SearchBar } from 'react-native-screens';
+
 
 class Posts extends Component {
 
@@ -13,11 +12,8 @@ class Posts extends Component {
             posteos: [],
         }
     }
-    //el estado es inmutable, hay que pisarlo con algo nuevo. Por eos hacemos un nuevo array de posts
-    // en el estado guardamos todo lo que queremos rendrizar porque cualq variable q no este ahi no va a se identificada por react
-    //react solo lee los cambios de las props
     componentDidMount() {
-        db.collection('posts').onSnapshot(
+        db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
             docs => {
                 let posts = [];
                 docs.forEach(doc => {
@@ -34,10 +30,6 @@ class Posts extends Component {
 
     render() {
         return (
-            /*<View>
-                {this.state.posteos.map(post => <li>{post.data.product}</li>)}
-
-            </View >*/
             <View style={styles.view}>
             <Text style={styles.title}> Lista de posteos</Text>
             <FlatList 
