@@ -34,7 +34,6 @@ class Profile extends Component {
                     if (data.owner === email) {
                         user = data;
                         idUser = id;
-                        console.log('todo okkkkk');
                     } 
 
                 });

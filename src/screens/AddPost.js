@@ -21,12 +21,15 @@ class AddPost extends Component {
             createdAt: Date.now(),
             likes: [],
         })
+
+            .then(() => {
+                this.props.navigation.navigate('Profile');
+            })
+
             .catch(e => console.log(e))
-        this.props.navigation.navigate('Profile')
     }
 
     onImageUpload(url) {
-        console.log(url)
         this.setState({
             showCamera: false,
             url: url
@@ -36,7 +39,7 @@ class AddPost extends Component {
     render() {
         return (
             <View>
-            {this.state.showCamera
+                {this.state.showCamera
                     ?
                     <MyCamera onImageUpload={(url) => this.onImageUpload(url)} />
 
@@ -47,7 +50,6 @@ class AddPost extends Component {
                             keyboardType='text'
                             placeholder='Description'
                             onChangeText={text => this.setState({ Description: text })}
-                            value={this.state.Product}
                         />
 
                         <TouchableOpacity onPress={() => this.onSubmit()}>
@@ -55,7 +57,7 @@ class AddPost extends Component {
                         </TouchableOpacity>
 
                     </View >
-            }</View>
+                }</View>
         )
     }
 }

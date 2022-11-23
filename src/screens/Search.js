@@ -10,7 +10,6 @@ class Search extends Component {
             search: false,
             users: [],
             filteredUsers: [],
-            usersError: ''
         }
     }
 
@@ -37,7 +36,6 @@ class Search extends Component {
             this.setState({ requiredField: '' })
      
         const filteredUsers = this.state.users?.filter((user) => user.data.userName.toLowerCase().includes(textToFilter));
-  
         this.setState({ 
             filteredUsers: filteredUsers, 
             search: true })
@@ -62,26 +60,29 @@ class Search extends Component {
               
                 <TextInput 
                 keyboardType='default'
-                placeholder='Search'
+                placeholder='Buscate algoooooo...'
                 onChangeText={text => this.setState({ value: text })}
                 value={this.state.value}
+                style={styles.input}
                     
                 />
                 <TouchableOpacity onPress={() => this.search()}>
-                    <Text styles={styles.button}> Enviar </Text>
+                    <Text style={styles.button}> Enviar </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => this.clear()}>
-                    <Text styles={styles.button}> Limpiar búsqueda </Text>
+                    <Text style={styles.button}> Limpiar búsqueda </Text>
                 </TouchableOpacity>
                
                 {
                     this.state.filteredUsers.length == 0 && this.state.search == true ?
                         <Text style={styles.users}>Usuario inexistente</Text> :
-                    
                 <FlatList 
                     data={this.state.filteredUsers}
                     keyExtractor={item => item.id.toString()}
-                    renderItem={({ item }) => <Text style={styles.users} >{item.data.userName}</Text>}
+                    renderItem={({ item }) => 
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('OtherProfile', { email: item.data.owner })}>
+                    <Text style={styles.users} >{item.data.userName}</Text>
+                </TouchableOpacity>}
                 />
                 }
                 
@@ -93,14 +94,6 @@ class Search extends Component {
 
 const styles = StyleSheet.create({
   
-    field: {
-        fontSize: 15,
-        backgroundColor: 'rgb(230, 230, 230)',
-        margin: '1%',
-        borderRadius: '30px',
-        padding: '1%',
-        color: 'rgb(153, 153, 153)'
-    }, 
     title: {
         fontFamily: 'Oswald, sans-serif',
         color:'black',
@@ -110,7 +103,7 @@ const styles = StyleSheet.create({
         marginBottom: 70,
     },
     users:{
-        color:'#926F5B',
+        color:'black',
         marginTop: 0,
         fontFamily: 'Raleway, sans-serif;',
         fontSize: 24,
@@ -118,7 +111,17 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         flexDirecion: 'wrap',
         textAlign: 'center',
-        textDecorationLine: 'underline',
+    },
+    input:{
+        color:'black',
+        marginTop: 0,
+        fontFamily: 'Raleway, sans-serif;',
+        fontSize: 20,
+        margin: 5,
+        fontStyle: 'italic', 
+        border: '2px solid #FF1493',
+        borderRadius: 4 , 
+
     },
     button: {
         fontFamily: 'Oswald, sans-serif',
@@ -126,29 +129,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 35,
         textAlign:'center',
-        marginBottom: 70,
-
+        marginBottom: 20,
         backgroundColor: '#FF1493',
         borderRadius: '15px',
-        marginTop: '5%',
         margin: '2%',
         padding: '1%',
         textAlign: 'center',
         fontSize: 15,
         color: 'black',
     },
-    text: {
-        fontSize: 50,
-        color: '#FF1493',
-        height: 100,
-        margin: 5,
-    },
-    error: {
-        color: 'red',
-        marginTop: '1%',
-        textAlign: 'center',
-        fontSize: 12,
-    },
+    
 })
 
 
