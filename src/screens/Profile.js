@@ -34,7 +34,7 @@ class Profile extends Component {
                     if (data.owner === email) {
                         user = data;
                         idUser = id;
-                    } 
+                    }
 
                 });
 
@@ -45,7 +45,7 @@ class Profile extends Component {
                     bio: user.bio,
                     url: user.url,
                     idUser: idUser
-                    
+
                 });
             }
         )
@@ -89,6 +89,9 @@ class Profile extends Component {
                     <TouchableOpacity onPress={() => this.logOut()}>
                         <Text style={styles.button}><button>Logout</button></Text>
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('editProfile', { idUser: this.state.idUser })}>
+                        <Text style={styles.button}><button>Editar</button></Text>
+                    </TouchableOpacity>
                 </View>
                 <FlatList
                     data={this.state.posteos}
@@ -96,9 +99,7 @@ class Profile extends Component {
                     renderItem={({ item }) => <View><Text style={styles.button} onPress={() => this.deletePost(item.id)}><button>Borrar</button></Text><Post postData={item} navigation={this.props.navigation} id={item.id} /></View>}
                 />
 
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('editProfile', {idUser: this.state.idUser})}>
-                    <Text style={styles.button}><button>Editar</button></Text>
-                </TouchableOpacity>
+
             </View>
         )
     }

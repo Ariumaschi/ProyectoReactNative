@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { auth, db } from '../firebase/config';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { getAuth, updatePassword } from "firebase/auth";
 import firebase from 'firebase';
+import { AntDesign } from '@expo/vector-icons';
+
 
 
 
@@ -39,17 +40,30 @@ class editProfile extends Component {
             .catch((e) => { console.log(e) });
     }
 
-/*
-    // Changes user's email...
-    onChangeEmailPress = () => {
-        this.reauthenticate(this.state.passActual).then(() => {
-            var user = firebase.auth().currentUser;
-            user.updateEmail(this.state.email).then(() => {
-                Alert.alert("Email was changed");
-            }).catch((error) => { console.log(error.message); });
-        }).catch((error) => { console.log(error.message) });
-    }
-*/
+    /*
+       
+        changeMail = () => {
+            this.reauthenticate(this.state.passActual)
+                .then(() => {
+                    db.collection('users')
+                        .doc(this.state.idUser)
+                        .update({
+                            owner: this.state.email,
+                        })
+                })
+                .then(() => {
+                    firebase.auth.currentUser.updateEmail(this.state.email)
+                        .then(() => {
+                            Alert.alert("Email modificado");
+                        })
+    
+                        .catch((e) => { console.log(e); });
+                })
+    
+                .catch((e) => { console.log(e) });
+        }
+    
+    */
     editar() {
 
         db.collection('users')
@@ -71,9 +85,12 @@ class editProfile extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <AntDesign name="left" size={24} color="black" onPress={() => this.props.navigation.navigate('Profile')} style={styles.back} />
                 <Text>Editar datos</Text>
                 <View style={styles.box}>
                     <Text style={styles.alert}>{this.state.errors}</Text>
+
+
 
                     <TextInput
                         style={styles.input}

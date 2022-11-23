@@ -64,6 +64,7 @@ class MyCamera extends Component {
                         <Image style={styles.preview}
                             source={{ uri: this.state.photo }}
                         />
+                        <View  style={styles.contenedorButton}>
                         <TouchableOpacity
                             style={styles.button}
                             onPress={() => this.savePhoto()}>
@@ -75,6 +76,7 @@ class MyCamera extends Component {
                             onPress={() => this.rechazar()}>
                             <Text>Rechazar</Text>
                         </TouchableOpacity>
+                        </View>
                     </View> :
                     <View style={styles.container}>
 
@@ -112,20 +114,29 @@ const styles = StyleSheet.create({
         position: 'absolute',
 
     },
+    
 
     preview: {
         width: '100%',
         height: '70vh',
         position: 'absolute'
     },
+    contenedorButton: {
+        display: 'flex',
+        flexDirection: 'row',
+
+
+    },
 
     shootButton: {
         marginTop: '200%'
     },
     button: {
-        width: '65vw',
-        height: '55vh',
-        padding: '30px'
+        backgroundColor: 'white',
+        color: 'white',
+        border: 'none',
+        padding: 5,
+      
     }
 })
 export default MyCamera;
