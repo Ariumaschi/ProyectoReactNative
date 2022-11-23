@@ -77,13 +77,12 @@ class Profile extends Component {
         db.collection('posts').doc(id).delete()
     }
 
-
-
     render() {
         return (
             <View style={styles.container} >
                 <View style={styles.containerBio}>
                     <Image style={styles.img} source={{ uri: this.state.url }} />
+                    <Text style={styles.text}>Posts: {this.state.posteos.length}</Text>
                     <Text style={styles.text}>{this.state.nombre}</Text>
                     <Text style={styles.text} >{this.state.userName}</Text>
                     <Text style={styles.text} >"{this.state.bio}"</Text>
