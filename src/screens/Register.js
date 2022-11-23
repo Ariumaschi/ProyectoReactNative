@@ -25,7 +25,7 @@ class Register extends Component {
         });
     }
     registerUser(email, pass, username) {
-        if (username != null) {
+        if (username != '') {
             auth.createUserWithEmailAndPassword(email, pass)
                 .then(res => {
                     db.collection('users').add({

@@ -12,19 +12,18 @@ class Login extends Component {
       };
   }
 
-  componentDidMount() {
-    if (auth.currentUser) {
-        auth.onAuthStateChanged(user => {
-        })
-        this.props.navigation.navigate('Main')
-    }
-    }
+  componentDidMount(){
+    auth.onAuthStateChanged( user => {
+        if(user){
+            this.props.navigation.navigate('Main')
+        }
+    })
+}
 
   onSubmit() {
     auth.signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => this.props.navigation.navigate('Main'))
       .catch(error => this.setState({errors: error.message}))
-      .then(() => console.log(this.state.errors))
   }
 
   render() {
