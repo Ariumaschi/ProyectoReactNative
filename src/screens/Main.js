@@ -14,9 +14,9 @@ export default function App() {
             <Tab.Screen name="Home" component={Posts} options={
                 { tabBarIcon: () => <Feather name="home" size={24} color="black" /> }
             } />
-                <Tab.Screen name="AddPost" component={AddPost} options={
-                    { tabBarIcon: () => <Feather name="plus-circle" size={24} color="black" /> }
-                } />
+            <Tab.Screen name="AddPost" component={AddPost} options={
+                { tabBarIcon: () => <Feather name="plus-circle" size={24} color="black" /> }
+            } />
             <Tab.Screen name="Profile" component={Profile} options={
                 { tabBarIcon: () => <MaterialIcons name="tag-faces" size={24} color="black" /> }
             } />

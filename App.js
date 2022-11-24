@@ -10,7 +10,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Component } from 'react';
 import { auth } from './src/firebase/config';
-import editProfile from './src/screens/editProfile';
+import EditProfile from './src/screens/EditProfile';
 
 
 
@@ -31,7 +31,7 @@ export default class App extends Component {
           <Stack.Screen name="Comment" component={Comment} options={{ headerShown: false }} />
           <Stack.Screen name="OtherProfile" component={OtherProfile} options={{ headerShown: false }} />
           <Stack.Screen name="MyCamera" component={MyCamera} options={{ headerShown: false }} />
-          <Stack.Screen name="editProfile" component={editProfile} options={{ headerShown: false }} />
+          <Stack.Screen name="EditProfile" component={EditProfile} options={{ headerShown: false }} />
 
         </Stack.Navigator>
       </NavigationContainer>

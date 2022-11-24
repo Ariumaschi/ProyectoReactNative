@@ -89,7 +89,7 @@ class Profile extends Component {
                     <TouchableOpacity onPress={() => this.logOut()}>
                         <Text style={styles.button}><button>Logout</button></Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('editProfile', { idUser: this.state.idUser })}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('EditProfile', { idUser: this.state.idUser })}>
                         <Text style={styles.button}><button>Editar</button></Text>
                     </TouchableOpacity>
                 </View>

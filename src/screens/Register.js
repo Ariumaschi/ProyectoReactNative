@@ -34,6 +34,7 @@ class Register extends Component {
                         owner: this.state.email,
                         url: this.state.url
                     })
+                    
                     this.props.navigation.navigate('Main');
                 })
                 .catch(error => this.setState({ errors: error.message }))

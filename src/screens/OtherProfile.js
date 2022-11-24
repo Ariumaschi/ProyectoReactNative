@@ -73,15 +73,15 @@ class OtherProfile extends Component {
     render() {
         return (
             <View style={styles.container} >
-                <AntDesign name="left" size={24} color="black" onPress={() => this.props.navigation.navigate('Home')} style={styles.back}/>
+                <AntDesign name="left" size={24} color="black" onPress={() => this.props.navigation.navigate('Home')} style={styles.back} />
                 <View style={styles.containerBio}>
                     <Image
                         style={styles.img}
                         source={{ uri: this.state.url }}
                     />
-                    <Text style={styles.text}>Nombre del usuario:{this.state.nombre}</Text>
-                    <Text style={styles.text} >userName:{this.state.userName}</Text>
-                    <Text style={styles.text} >Bio:{this.state.bio}</Text>
+                    <Text style={styles.text}>{this.state.nombre}</Text>
+                    <Text style={styles.text} >{this.state.userName}</Text>
+                    <Text style={styles.text} >{this.state.bio}</Text>
                     <TouchableOpacity onPress={() => this.logOut()}>
                         <Text style={styles.button} >  <button>Logout</button></Text>
                     </TouchableOpacity>

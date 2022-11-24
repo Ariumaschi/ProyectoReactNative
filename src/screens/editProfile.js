@@ -7,7 +7,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 
 
-class editProfile extends Component {
+class EditProfile extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -40,30 +40,7 @@ class editProfile extends Component {
             .catch((e) => { console.log(e) });
     }
 
-    /*
-       
-        changeMail = () => {
-            this.reauthenticate(this.state.passActual)
-                .then(() => {
-                    db.collection('users')
-                        .doc(this.state.idUser)
-                        .update({
-                            owner: this.state.email,
-                        })
-                })
-                .then(() => {
-                    firebase.auth.currentUser.updateEmail(this.state.email)
-                        .then(() => {
-                            Alert.alert("Email modificado");
-                        })
-    
-                        .catch((e) => { console.log(e); });
-                })
-    
-                .catch((e) => { console.log(e) });
-        }
-    
-    */
+
     editar() {
 
         db.collection('users')
@@ -78,7 +55,6 @@ class editProfile extends Component {
             })
 
     }
-
 
 
 
@@ -176,4 +152,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default editProfile;
+export default EditProfile;

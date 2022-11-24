@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, StyleSheet} from 'react-native';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { db, } from '../firebase/config'
 import Post from '../components/Post';
 
@@ -31,27 +31,27 @@ class Posts extends Component {
     render() {
         return (
             <View style={styles.view}>
-            <Text style={styles.title}> Lista de posteos</Text>
-            <FlatList 
+                <Text style={styles.title}> Lista de posteos</Text>
+                <FlatList
                     data={this.state.posteos}
-                    keyExtractor={ item => item.id.toString()}
-                    renderItem={ ({item}) => <Post postData={item} navigation={this.props.navigation} id={item.id}/>}
-            />  
+                    keyExtractor={item => item.id.toString()}
+                    renderItem={({ item }) => <Post postData={item} navigation={this.props.navigation} id={item.id} />}
+                />
             </View>
         )
     }
 }
 const styles = StyleSheet.create({
-    
-   title:{
+
+    title: {
         fontFamily: 'Playfair Display',
-        color:'black',
-        fontSize: 35,   
-        textAlign:'center',
-        fontWeight:'bold'
+        color: 'black',
+        fontSize: 35,
+        textAlign: 'center',
+        fontWeight: 'bold'
     },
-    view:{
-        flex:1
+    view: {
+        flex: 1
     }
 })
 

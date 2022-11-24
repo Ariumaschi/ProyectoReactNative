@@ -17,8 +17,8 @@ class Comment extends Component {
 
   componentDidMount() {
     db.collection("posts")
-    .doc(this.state.id)
-    .onSnapshot((doc) => {
+      .doc(this.state.id)
+      .onSnapshot((doc) => {
         this.setState({
           data: doc.data(),
         });
@@ -28,37 +28,37 @@ class Comment extends Component {
   publicarComentario() {
 
     let oneComment = {
-        author: auth.currentUser.email,
-        createdAt: Date.now(),
-        commentText: this.state.comment
+      author: auth.currentUser.email,
+      createdAt: Date.now(),
+      commentText: this.state.comment
     }
 
     db.collection('posts')
-    .doc(this.state.id)
-    .update({
+      .doc(this.state.id)
+      .update({
         comments: firebase.firestore.FieldValue.arrayUnion(oneComment)
-    })
-        .then(() => {
-            this.setState({
-                comment:''
-            })
+      })
+      .then(() => {
+        this.setState({
+          comment: ''
         })
-        .catch(e => console.log(e))
-}
+      })
+      .catch(e => console.log(e))
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <AntDesign name="left" size={24} color="black" onPress={() => this.props.navigation.navigate('Home')} style={styles.back}/>
-        <Text style={styles.description}>{this.state.data.Description}</Text>
-        <FlatList 
-        data={this.state.data.comments} 
-        keyExtractor={(post) => post.createdAt.toString()} 
-        renderItem={({ item }) => (<Text> {item.author}: {item.commentText} </Text>)}/>
+        <AntDesign name="left" size={24} color="black" onPress={() => this.props.navigation.navigate('Home')} style={styles.back} />
+        <Text style={styles.description}>Más Comentarios</Text>
+        <FlatList
+          data={this.state.data.comments}
+          keyExtractor={(post) => post.createdAt.toString()}
+          renderItem={({ item }) => (<Text > {item.author}: {item.commentText} </Text>)} />
 
-        <TextInput keyboardType='default' placeholder='Escribí tu comentario' onChangeText={(text) => { this.setState({ comment: text }) }} value={this.state.comment} style={styles.input}/>
+        <TextInput keyboardType='default' placeholder='Escribí tu comentario' onChangeText={(text) => { this.setState({ comment: text }) }} value={this.state.comment} style={styles.input} />
         <TouchableOpacity onPress={() => this.publicarComentario()}>
-            <Text style={styles.button}>Comentar</Text>
+          <Text style={styles.button}>Comentar</Text>
         </TouchableOpacity>
       </View>
     );
@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
     margin: '4%'
   },
   description: {
-      fontWeight: 'bold',
-      margin: '4%'
+    fontWeight: 'bold',
+    margin: '4%'
   }
 });
 
